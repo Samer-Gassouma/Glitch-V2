@@ -1,10 +1,10 @@
 {
   "expo": {
     "name": "glitch_v2",
-    "slug": "glitch_v2",
+    "slug": "glitch",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/images/logo-color.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -19,12 +19,25 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/images/logo-color.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.ivan552.glitch_v2"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
-    }
+      "favicon": "./assets/images/logo-color.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "26bf7f1b-161b-4c97-b851-ac091c625c71"
+      },
+      "router": {
+        "origin": false
+      }
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "owner": "samer_gassouma"
   }
 }
