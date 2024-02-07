@@ -72,20 +72,8 @@ export default function DetailFile({ navigation,route }) {
   };
 
   const handleRead =async () => {
-    if(item.URL2) {
-    try {
-      const downloadURL = item.URL2;
-      const supported = await Linking.canOpenURL(downloadURL);
-
-      if (supported) {
-        await Linking.openURL(downloadURL);
-      } else {
-        console.error('Cannot open the download link');
-      }
-    } catch (error) {
-      console.error('Error downloading file:', error);
-    }
-  }
+    navigation.navigate("PdfReader", { url: item.URL2 });
+ 
   };
   const handleDownload = async () => {
     if(item.URL2) {
@@ -105,7 +93,6 @@ export default function DetailFile({ navigation,route }) {
   };
 
   const handleEdit = () => {
-    // Navigate to the EditFile screen
     navigation.navigate("EditFile", { id: item.ResourceID });
   };
 
@@ -125,15 +112,9 @@ export default function DetailFile({ navigation,route }) {
   };
   return (
     <Layout style={{ backgroundColor: uploadDateColor ? themeColor.black : themeColor.white }}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-      <Ionicons style={{
-        marginTop: 15,
-        marginBottom: 10, 
-        
-        marginLeft: 20,
-      
-      }} name="arrow-back" size={24} color="black" />
-    </TouchableOpacity>
+   <TouchableOpacity  onPress={() => navigation.goBack()} style={styles.back}>
+                    <Ionicons name="arrow-back" size={30} color={'#666'} />
+                </TouchableOpacity>
  <Spinner
           visible={loading}
           textContent={'Loading...'}
@@ -144,10 +125,10 @@ export default function DetailFile({ navigation,route }) {
         <Text style={styles.fileName}>File Name : {item.ResourceName}</Text>
         <Text style={styles.visibilityMode}>{item.VisibilityMode}</Text>
       </View>        
-      <Text style={styles.uploadDate}>Uploaded on: {item.created_at}</Text>
+      <Text style={styles.uploadDate}>Uploaded on: {new Date(item.created_at).toDateString()}</Text>
         <View style={styles.buttonsContainer}>
           <Button text="Read" onPress={handleRead} style={styles.button} />
-          {item.VisibilityMode == "Download" && (
+          {item.VisibilityMode == "Read" && (
           <Button text="Download" onPress={handleDownload} style={styles.button} />
           )}
           {user.is_admin && (
@@ -188,13 +169,21 @@ const styles = StyleSheet.create({
   },
   button: (isDarkmode) => ({
     flex: 1,
-    marginHorizontal: 5,
-    backgroundColor: isDarkmode ? themeColor.dark : themeColor.primary,
   }),
   buttonsContainer : {
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginTop: 20,
   },
-
+  back: {
+    borderWidth: 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 50,
+    position: 'absolute',
+    bottom: 20,
+    left: 20,
+    height: 50,
+    borderRadius: 20,
+},
 });

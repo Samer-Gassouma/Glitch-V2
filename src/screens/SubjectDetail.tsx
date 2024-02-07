@@ -60,21 +60,16 @@ export default function SubjectPage({  route}) {
   return (
     <Layout>
       <ActivityIndicator animating={loading} size="large" color="#0000ff" />
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-      <Ionicons style={{
-        marginTop: 5,
-        marginBottom: 5, 
-        
-        marginLeft: 20,
       
-      }} name="arrow-back" size={24} color="black" />
-    </TouchableOpacity>
       <FlatList
         data={subjects}
         keyExtractor={(item) => item.FolderID.toString()}
         renderItem={renderSubjectItem}
         contentContainerStyle={styles.subjectList}
       />
+      <TouchableOpacity  onPress={() => navigation.goBack()} style={styles.back}>
+                    <Ionicons name="arrow-back" size={30} color={'#666'} />
+                </TouchableOpacity>
     </Layout>
   );
 }
@@ -100,5 +95,15 @@ const styles = StyleSheet.create({
   subjectItemText: {
     fontSize: 16,
     color: themeColor.dark,
-  },
+  },  back: {
+    borderWidth: 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 50,
+    position: 'absolute',
+    bottom: 20,
+    left: 20,
+    height: 50,
+    borderRadius: 20,
+},
 });

@@ -25,6 +25,7 @@ const DetailScreen: React.FC<DetailScreenProps> = ({ route }) => {
   const [Resources, setResources] = useState([] as any);
   const [folders, setFolders] = useState([] as any);
   const [loading, setLoading] = useState(true);
+  const [ppid, setPpid] = useState(0);
   const navigation = useNavigation();
 
   const [user, setUser] = useState([]);
@@ -66,6 +67,18 @@ const DetailScreen: React.FC<DetailScreenProps> = ({ route }) => {
       }
 
       setFolders(foldersData || []);
+
+      const { data: parentFolderData, error: parentFolderError } = await supabase
+        .from('folders')
+        .select('*')
+        .eq('FolderID', id)
+        .single();
+
+      if (parentFolderError) {
+        throw parentFolderError;
+      }
+
+      setPpid(parentFolderData.ParentFolderID);
     } catch (error) {
       console.log(error.message);
     } finally {
@@ -83,6 +96,7 @@ const DetailScreen: React.FC<DetailScreenProps> = ({ route }) => {
     navigation.navigate('EditFolder', { Folder_ID ,FolderName});
   }
 
+  console.log("PPID",ppid)
   const handleDeleteFolder = async (Folder_ID :any) => {
     try {
       const { error } = await supabase
@@ -99,7 +113,6 @@ const DetailScreen: React.FC<DetailScreenProps> = ({ route }) => {
       console.log(error.message);
     }
   }
-
 
   const renderSubjectItem = ({ item }) => (
     <TouchableOpacity
@@ -188,11 +201,21 @@ const DetailScreen: React.FC<DetailScreenProps> = ({ route }) => {
     )
   }
 
+  const handleGetBack = () => {
+    if(ppid == 0) {
+      navigation.goBack();
+    }
+    else{
+      navigation.navigate('Detail', { id: ppid });
+    }
+  }
+
   return (
     <MenuProvider>
 
     <Layout>
-       <TouchableOpacity onPress={() => navigation.goBack()}>
+      
+       <TouchableOpacity onPress={() => handleGetBack()}>
       <Ionicons style={{
         marginTop: 5,
         marginBottom: 5, 

@@ -15,6 +15,7 @@ import EditFolder from "../screens/folder/EditFolder";
 import AddSubject from "../screens/subject/AddSubject";
 import EditSubject from "../screens/subject/EditSubject";
 
+import PdfReader from "../screens/PdfReader";
 const MainStack = createNativeStackNavigator();
 const Main = () => {
   return (
@@ -39,6 +40,7 @@ const Main = () => {
 
       <MainStack.Screen name="AddSubject" component={AddSubject} />
       <MainStack.Screen name="EditSubject" component={EditSubject} />
+      <MainStack.Screen name="PdfReader" component={PdfReader} />
     </MainStack.Navigator>
   );
 };
